@@ -63,9 +63,14 @@
     }
 
     .hero-background.active {
-      animation: kenburns 5s ease-out forwards;
+      animation-name: kenburns;
+      animation-duration: 5s;
+      animation-timing-function: ease-out;
+      animation-iteration-count: infinite;
+      animation-fill-mode: forwards;
       opacity: 1;
     }
+
 
     @keyframes kenburns {
       0% {
@@ -128,8 +133,8 @@
     .cta-button {
       display: inline-block;
       padding: 18px 36px;
-      background: var(--cream);
-      color: var(--brown);
+      background: var(--brown);
+      color: var(--cream);
       text-decoration: none;
       border-radius: 50px;
       font-size: 1.1rem;
@@ -146,6 +151,11 @@
     .features {
       padding: var(--spacing) 0;
       background: var(--cream);
+    }
+
+    .tombol {
+      padding: var(--spacing) 0;
+      background: var(--brown);
     }
 
     .features-grid {
@@ -318,9 +328,9 @@
       opacity: 0;
     }
 
-    .delay-1 { animation-delay: 0.2s; }
-    .delay-2 { animation-delay: 0.4s; }
-    .delay-3 { animation-delay: 0.6s; }
+    /* .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.2s; } */
 
     @media (max-width: 768px) {
       :root {
