@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kebijakan Privasi | DWS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --cream: #fdf6f0;
+      --brown: #4e342e;
+      --accent: #8d6e63;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--cream);
+      color: var(--brown);
+      line-height: 1.9;
+      letter-spacing: 0.4px;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 0;
+    }
+
+    .privacy-header {
+      margin-bottom: 3rem;
+      padding: 0 2rem 2rem;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .privacy-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin: 0 0 1.5rem 1rem;
+      color: var(--brown);
+      line-height: 1.2;
+    }
+
+    section {
+      margin: 3rem 0;
+      padding: 0 2rem;
+      border-left: 3px solid rgba(141,110,99,0.1);
+      transition: all 0.3s ease;
+    }
+
+    section:hover {
+      border-left-color: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin: 0 0 1.5rem 1rem;
+      position: relative;
+    }
+
+    .privacy-text {
+      margin: 0 0 2rem 1rem;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 500;
+      padding: 0.2rem 0.4rem;
+      background: rgba(141,110,99,0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+      
+      .container {
+        width: 90%;
+        padding: 3rem 0;
+      }
+      
+      .privacy-title {
+        font-size: 2rem;
+        margin-left: 0.5rem;
+      }
+      
+      section {
+        padding: 0 1rem;
+        margin: 2rem 0;
+        border-left-width: 2px;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+        margin-left: 0.5rem;
+      }
+      
+      .privacy-text {
+        margin-left: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .privacy-header {
+        padding: 0 1rem 1rem;
+      }
+      
+      section {
+        padding: 0 0.5rem;
+      }
+      
+      .privacy-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    .text-box {
+      background: rgba(78,52,46,0.05);
+      border: 1px solid rgba(78,52,46,0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .text-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -1px;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .privacy-text {
+      margin: 0;
+      text-align: left;
+      color: var(--brown);
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section>
+    <h2 class="section-title">1. Data yang Kami Kumpulkan</h2>
+    <div class="text-box">
+      <p class="privacy-text">
+        Kami hanya butuh nama saja.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">2. Penggunaan Data</h2>
+    <div class="text-box">
+      <p class="privacy-text">
+        Data yang kami kumpulkan digunakan untuk membuat website ini lebih baik dan 
+        menampilkan konten yang sesuai dengan minat kamu.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">3. Keamanan</h2>
+    <div class="text-box">
+      <p class="privacy-text">
+        Kami pakai sistem keamanan terbaik untuk menjaga data kamu. 
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">4. Perubahan Kebijakan</h2>
+    <div class="text-box">
+      <p class="privacy-text">
+        Kebijakan ini bisa berubah.
+      </p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadComponents = async () => {
+        try {
+          const [header, footer] = await Promise.all([
+            fetch('header.html').then(res => res.text()),
+            fetch('footer.html').then(res => res.text())
+          ]);
+          
+          document.getElementById('header').innerHTML = header;
+          document.getElementById('footer').innerHTML = footer;
+        } catch (error) {
+          console.error('Error loading components:', error);
+        }
+      };
+
+      loadComponents();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajukan Pertanyaan - DWS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdf6f0;
+            color: #4e342e;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-header h1 {
+            font-size: 2.5rem;
+            color: #4e342e;
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            color: #6d4c41;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4e342e;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #a1887f;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            background: #4e342e;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #3e2723;
+        }
+
+        .success-message {
+            display: none;
+            background: #c8e6c9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .form-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        button:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s;
+            transform: translateY(20px);
+        }
+
+        .success-message.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @keyframes buttonSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fa-spinner {
+            animation: buttonSpin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="container">
+        <form class="contact-form" id="questionForm">
+            <div class="form-header">
+                <h1>Ajukan Pertanyaan</h1>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="question">Pertanyaan</label>
+                <textarea id="question" name="question" required></textarea>
+            </div>
+
+            <button type="submit">Kirim Pertanyaan</button>
+            <div class="success-message" id="successMessage">
+                Pertanyaan Anda telah berhasil dikirim! Kami akan segera meninjau dan menjawabnya.
+            </div>
+        </form>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                });
+
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                });
+        });
+
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                category: document.getElementById('category').value,
+                question: document.getElementById('question').value,
+                timestamp: new Date().toISOString()
+            };
+
+            let questions = JSON.parse(localStorage.getItem('questions') || '[]');
+            questions.push(formData);
+            localStorage.setItem('questions', JSON.stringify(questions));
+
+            document.getElementById('successMessage').style.display = 'block';
+            
+            this.reset();
+
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        });
+
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+        
+            const button = this.querySelector('button');
+            const originalText = button.innerHTML;
+        
+            button.innerHTML = '<i class="fas fa-spinner"></i> Mengirim...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    question: document.getElementById('question').value,
+                    timestamp: new Date().toISOString()
+                };
+
+                let questions = JSON.parse(localStorage.getItem('questions') || '[]');
+                questions.push(formData);
+                localStorage.setItem('questions', JSON.stringify(questions));
+
+                button.innerHTML = originalText;
+                button.disabled = false;
+
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+
+                this.reset();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
